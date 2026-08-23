@@ -1,5 +1,4 @@
 # Auto-SRE
-# Auto-SRE
 
 Auto-SRE is a local Kubernetes reliability lab and operator. It uses Minikube to reproduce failures, collect evidence, diagnose incidents, and eventually apply guarded remediation.
 
