@@ -47,9 +47,15 @@ flowchart LR
 	findings --> agent
 	agent --> diagnosis[Validated diagnosis JSON]
 	diagnosis --> cli
+
+	click cli "https://github.com/asishkashyap/Auto-SRE/blob/main/src/auto_sre/cli.py" "Open CLI implementation"
+	click scanner "https://github.com/asishkashyap/Auto-SRE/blob/main/src/auto_sre/scanner.py" "Open scanner implementation"
+	click agent "https://github.com/asishkashyap/Auto-SRE/blob/main/src/auto_sre/ollama_agent.py" "Open Ollama client"
+	click deployment "https://github.com/asishkashyap/Auto-SRE/blob/main/deploy/demo.yaml" "Open Kubernetes manifest"
+	click service "https://github.com/asishkashyap/Auto-SRE/blob/main/deploy/demo.yaml" "Open Kubernetes manifest"
 ```
 
-The scanner reads Kubernetes state through `kubectl` and never changes cluster resources. The diagnosis path sends scanner findings to Ollama on the local machine; the model cannot execute Kubernetes commands or perform remediation.
+Select the CLI, scanner, Ollama, Deployment, or Service nodes to open their implementation or manifest on GitHub. The scanner reads Kubernetes state through `kubectl` and never changes cluster resources. The diagnosis path sends scanner findings to Ollama on the local machine; the model cannot execute Kubernetes commands or perform remediation.
 
 ## Local Ollama diagnosis
 
