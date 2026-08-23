@@ -25,6 +25,32 @@ pytest
 
 A critical finding returns exit code `2`; a clean scan returns `0`; an unavailable cluster or invalid command returns `1`.
 
+## Architecture
+
+```mermaid
+flowchart LR
+	operator[Operator] --> cli[auto-sre CLI]
+	cli -->|scan| scanner[Namespace scanner]
+	scanner -->|kubectl get pods/events| api[Kubernetes API]
+
+	subgraph cluster[Minikube cluster]
+		api --> namespace[auto-sre namespace]
+		namespace --> deployment[demo-api Deployment]
+		deployment --> pod[demo-api Pod]
+		namespace --> service[demo-api Service]
+	end
+
+	scanner --> findings[Structured findings]
+	findings -->|human-readable or JSON| cli
+	cli -->|diagnose| agent[Ollama diagnosis client]
+	agent -->|local HTTP| ollama[Ollama model]
+	findings --> agent
+	agent --> diagnosis[Validated diagnosis JSON]
+	diagnosis --> cli
+```
+
+The scanner reads Kubernetes state through `kubectl` and never changes cluster resources. The diagnosis path sends scanner findings to Ollama on the local machine; the model cannot execute Kubernetes commands or perform remediation.
+
 ## Local Ollama diagnosis
 
 Install Ollama for Windows from <https://ollama.com/download/windows>, then start it and pull the default model:
